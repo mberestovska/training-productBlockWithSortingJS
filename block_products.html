@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="block_products.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="block">
+            <div class="sort sort-brands">
+                <span>Brands <i class="fas fa-chevron-circle-down"></i> </span>
+
+                <ul class="brands-list brand-list">
+                    <li><a href="#">Buffalo Decolete</a></li>
+                    <li><a href="#">Even&#38;Odd</a></li>
+                    <li><a href="#">Prada</a></li>
+                    <li><a href="#">Casadei</a></li>
+                    <li><a href="#">Mellow Yellow</a></li>
+                </ul>
+                <div class="cnl"><i class="fas fa-times brand"></i></div>
+            </div>
+
+            <div class="sort sort-category">
+                <span>Categories <i class="fas fa-chevron-circle-down"></i></span>
+
+                <ul class="brands-list category-list">
+                    <li><a href="#">Men's</a></li>
+                    <li><a href="#">Women's</a></li>
+                    <li><a href="#">Kid's</a></li>
+                </ul>
+                <div class="cnl"><i class="fas fa-times categ"></i></div>
+            </div>
+        </div>
+    </div>
+    <div class="products">
+        <div class="container prod">
+            <h2>Products</h2>
+            <div class="prod-container"></div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        // to create elements 
+        var items = [{
+                name: 'Even&Odd',
+                url: 'shoe1.png',
+                price: '$145.00',
+                onSale: true,
+                outOfStock: false
+            },
+            {
+                name: 'Buffalo Decolete',
+                url: 'shoe1.png',
+                price: '$143.00',
+                onSale: false,
+                outOfStock: false
+            },
+            {
+                name: 'Even&Odd',
+                url: 'shoe1.png',
+                price: '$141.00',
+                onSale: false,
+                outOfStock: true
+            },
+            {
+                name: 'Buffalo Decolete',
+                url: 'shoe1.png',
+                price: '$149.00',
+                onSale: false,
+                outOfStock: false
+            },
+            {
+                name: 'Prada',
+                url: 'shoe1.png',
+                price: '$141.00',
+                onSale: true,
+                outOfStock: true
+            },
+            {
+                name: 'Prada',
+                url: 'shoe1.png',
+                price: '$141.00',
+                onSale: true,
+                outOfStock: true
+            },
+            {
+                name: 'Casadei',
+                url: 'shoe1.png',
+                price: '$141.00',
+                onSale: false,
+                outOfStock: false
+            },
+            {
+                name: 'Mellow Yellow',
+                url: 'shoe1.png',
+                price: '$141.00',
+                onSale: false,
+                outOfStock: true
+            },
+            {
+                name: 'Casadei',
+                url: 'shoe1.png',
+                price: '$141.00',
+                onSale: true,
+                outOfStock: false
+            }
+        ]
+        var ic = [{
+                class: 'fa-eye',
+                url: 'toTheSit.net'
+            },
+            {
+                class: 'fa-star',
+                url: 'toTheSit.net'
+            },
+            {
+                class: 'fa-share-square',
+                url: 'toTheSit.net'
+            },
+            {
+                class: 'fa-shopping-cart',
+                url: 'toTheSit.net'
+            }
+        ];
+        var makeElement = function (tagName, className, text) {
+            var element = document.createElement(tagName);
+            element.classList.add(className);
+            if (text) {
+                element.textContent = text;
+            }
+            return element;
+        };
+        var createCard = function (good) {
+            //create element
+            var prodItem = makeElement('div', 'card');
+            var prodName = makeElement('div', 'name');
+            var prodPrice = makeElement('div', 'price');
+
+            // image
+            var picture = makeElement('img', 'productImage');
+            picture.src = good.url;
+            picture.alt = good.name;
+            prodItem.appendChild(picture);
+            // create p - elemnt and append it into recpective conteiner 
+            prodName.appendChild(makeElement('p', 'e', good.name));
+            prodPrice.appendChild(makeElement('p', 'e', good.price));
+            //append element into card container
+            prodItem.appendChild(prodName);
+            prodItem.appendChild(prodPrice);
+
+            //icons 
+            var iconsCont = makeElement('div', 'icons');
+            for (var j = 0; j < ic.length; j++) {
+                var iconElem = makeElement('i', 'far');
+                var linkA = makeElement('a', 'e');
+                iconElem.classList.add(ic[j].class);
+                linkA.appendChild(iconElem);
+                iconsCont.appendChild(linkA);
+            }
+            prodItem.appendChild(iconsCont);
+
+            if (good.onSale) {
+                var specialOffer = makeElement('div', 'bage');
+                var spOffer = makeElement('p', 'e', 'On Sale');
+                specialOffer.appendChild(spOffer);
+                prodItem.appendChild(specialOffer);
+            }
+
+            if (good.outOfStock) {
+                var outOfStock = makeElement('div', 'bage');
+                var stock = makeElement('p', 'e', 'Out of Stock');
+                outOfStock.appendChild(stock);
+                outOfStock.classList.add('outOfStock');
+                prodItem.appendChild(outOfStock);
+            }
+
+            return prodItem;
+        };
+
+        var renderCards = function (items) {
+            var cardList = document.querySelector('.prod-container');
+
+            for (var i = 0; i < items.length; i++) {
+                var cardItem = createCard(items[i]);
+                cardList.appendChild(cardItem);
+            }
+
+        };
+        renderCards(items);
+    </script>
+
+    <script>
+        // for hover effect 
+        $('.card').each(function (index, element) {
+            $(this).mouseenter(function () {
+                $(this).children('.icons').show();
+                $(this).children('.name').hide();
+            }).mouseleave(function () {
+                $('.icons').hide();
+                $(this).children('.name').show();
+            });
+        });
+    </script>
+    <script>
+        // for sort list dropdown
+   
+        $('.sort span').on('click', function (index, element) {
+            $(this).siblings('.brands-list').slideToggle();
+
+        });
+        $('.brand-list li').on("click", function () {
+            $('.sort-brands span').text($(this).text());
+            $('.brand').show();
+            $('.brands-list').slideUp();
+            sortBrands();
+            
+        });
+        $('.category-list li').on("click", function () {
+            $('.sort-category span').text($(this).text());
+            $('.categ').show();
+            $('.brands-list').slideUp();
+            
+        });
+       
+    </script>
+    <script>
+        // for sorting by brands
+        function sortBrands() {
+            var brandValue = $('.sort-brands span').text();
+            console.log(brandValue);
+            $('.card').remove();
+            console.log('old cards removed');
+            for (var i = 0; i < items.length; i++) {
+                if (brandValue == items[i].name) {
+                    var cardList = document.querySelector('.prod-container');
+                    var cardItem = createCard(items[i]);
+                    cardList.appendChild(cardItem);
+                };
+            };
+            
+        };
+    </script>
+    <script>
+        // for reseting the sort option 
+        $('.cnl').on('click', ()=>{
+            alert('clicked');   
+            var arrowDown = makeElement('i', 'fas');
+            arrowDown.classList.add('fa-chevron-circle-down');
+            $(this).siblings('span').text();
+            $('.card').remove();
+            renderCards(items);
+            
+            console.log('this is done');
+        });
+    </script>
+
+</body>
+
+</html>
